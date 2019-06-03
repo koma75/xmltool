@@ -32,8 +32,9 @@ Usage: xmltool json [OPTIONS] SCHEMA XML JSON
   Convert XML to JSON using Schema
 
 Options:
-  -v, --verbose  output in verbose mode
-  -h, --help     Show this message and exit.
+  -o, --overwrite  overwrite existing file in JSON
+  -v, --verbose    output in verbose mode
+  -h, --help       Show this message and exit.
 ~~~
 
 Version Hitory
