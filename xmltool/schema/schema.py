@@ -43,7 +43,7 @@ class Level(IntEnum):
     ERROR = 40
     CRITICAL = 50
 
-def pout(msg=None, verbose=False, level=Level.INFO, newline=True):
+def pout(msg=None, verbose=0, level=Level.INFO, newline=True):
     """stdout support method
 
     Keyword Arguments:
