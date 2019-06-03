@@ -62,6 +62,10 @@ def chk(**kwargs):
 @click.argument('XML')
 @click.argument('JSON')
 @click.option(
+    '--overwrite', '-o', is_flag=True,
+    help='overwrite existing file in JSON'
+    )
+@click.option(
     '--verbose', '-v', count=True,
     help='output in verbose mode'
     )

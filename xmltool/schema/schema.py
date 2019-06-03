@@ -29,6 +29,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from enum import IntEnum
+import os
 
 import click
 import json
@@ -113,11 +114,16 @@ def toJson(kwargs):
         pout("{msg}".format(msg=str(e)), kwargs["verbose"], Level.ERROR)
         err = True
     if not err:
-        # no error output to kwargs["json"]
+        # Successfully read xml file. output to kwargs["json"]
         try:
-            outfile = open(kwargs["json"], "w")
-            outfile.write("{output}".format(output=xmlJson))
+            fileexists = os.path.exists(kwargs["json"])
+            if kwargs["overwrite"] or not fileexists:
+                if fileexists:
+                    pout("overwriting {fname}".format(fname=kwargs["json"]), kwargs["verbose"], Level.WARNING)
+                outfile = open(kwargs["json"], "w")
+                outfile.write("{output}".format(output=xmlJson))
+            else:
+                pout("cannot overwrite {fname}".format(fname=kwargs["json"]), kwargs["verbose"], Level.ERROR)
         except:
             pout("could not write to file: {fname}".format(fname=kwargs["json"]), kwargs["verbose"], Level.ERROR)
-        pass
     pass
