@@ -6,8 +6,7 @@ Simple XML handling cli tool
 Installation
 ------------------------------------------------------------------------
 
-* not registered in python registry.  Install by cloning the repository
-* after cloning the project, do `pip install`.
+* run `pip install git+https://github.com/koma75/xmltool` in commandline
 
 Usage
 ------------------------------------------------------------------------
