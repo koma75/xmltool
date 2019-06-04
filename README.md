@@ -36,6 +36,19 @@ Options:
   -h, --help       Show this message and exit.
 ~~~
 
+### Convert to YAML
+
+~~~text
+Usage: xmltool yaml [OPTIONS] SCHEMA XML YAML
+
+  Convert XML to YAML using Schema
+
+Options:
+  -o, --overwrite  overwrite existing file in YAML
+  -v, --verbose    output in verbose mode
+  -h, --help       Show this message and exit.
+~~~
+
 Version Hitory
 ------------------------------------------------------------------------
 
