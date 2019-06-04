@@ -28,12 +28,14 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from enum import IntEnum
+import json
 import os
+from enum import IntEnum
 
 import click
-import json
 import xmlschema
+import yaml
+
 
 class Level(IntEnum):
     NOTSET = 0
@@ -71,6 +73,7 @@ def pout(msg=None, verbose=0, level=Level.INFO, newline=True):
     else:
         pass
     click.echo(click.style(str(msg), fg=fg), nl=newline, err=error)
+    return
 
 def validate(kwargs):
     """validate xml against xsd schema file"""
@@ -92,7 +95,7 @@ def validate(kwargs):
         rt = False
     if rt:
         pout("XML Schema valid!", kwargs["verbose"], Level.INFO)
-    pass
+    return
 
 def toJson(kwargs):
     """export xml file to json"""
@@ -126,4 +129,38 @@ def toJson(kwargs):
                 pout("cannot overwrite {fname}".format(fname=kwargs["json"]), kwargs["verbose"], Level.ERROR)
         except:
             pout("could not write to file: {fname}".format(fname=kwargs["json"]), kwargs["verbose"], Level.ERROR)
-    pass
+    return
+
+def toYAML(kwargs):
+    """export xml file to YAML"""
+    pout(kwargs, kwargs["verbose"], Level.DEBUG)
+    err = False
+    try:
+        pout("Schema: {file}".format(file=kwargs["schema"]), kwargs["verbose"], Level.DEBUG)
+        mySchema = xmlschema.XMLSchema(kwargs["schema"], validation='lax')
+        try:
+            pout("XML: {file}".format(file=kwargs["xml"]), kwargs["verbose"], Level.DEBUG)
+            xmlYAML = yaml.dump(mySchema.to_dict(kwargs["xml"], decimal_type=str), sort_keys=False)
+            pout("{out}".format(out=xmlYAML), kwargs["verbose"], Level.DEBUG)
+        except Exception as e:
+            pout("validation failed", kwargs["verbose"], Level.WARNING)
+            pout("{msg}".format(msg=str(e)), kwargs["verbose"], Level.ERROR)
+            err = True
+    except Exception as e:
+        pout("XML Schema load failed.", kwargs["verbose"], Level.WARNING)
+        pout("{msg}".format(msg=str(e)), kwargs["verbose"], Level.ERROR)
+        err = True
+    if not err:
+        # Successfully read xml file. output to kwargs["yaml"]
+        try:
+            fileexists = os.path.exists(kwargs["yaml"])
+            if kwargs["overwrite"] or not fileexists:
+                if fileexists:
+                    pout("overwriting {fname}".format(fname=kwargs["yaml"]), kwargs["verbose"], Level.WARNING)
+                outfile = open(kwargs["yaml"], "w")
+                outfile.write("{output}".format(output=xmlYAML))
+            else:
+                pout("cannot overwrite {fname}".format(fname=kwargs["yaml"]), kwargs["verbose"], Level.ERROR)
+        except:
+            pout("could not write to file: {fname}".format(fname=kwargs["yaml"]), kwargs["verbose"], Level.ERROR)
+    return

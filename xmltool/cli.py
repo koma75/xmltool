@@ -75,6 +75,24 @@ def json(**kwargs):
     pass
 
 
+@cli.command()
+@click.argument('SCHEMA')
+@click.argument('XML')
+@click.argument('YAML')
+@click.option(
+    '--overwrite', '-o', is_flag=True,
+    help='overwrite existing file in JSON'
+    )
+@click.option(
+    '--verbose', '-v', count=True,
+    help='output in verbose mode'
+    )
+def yaml(**kwargs):
+    """Convert XML to YAML using Schema"""
+    schema.toYAML(kwargs)
+    pass
+
+
 # Entry point
 def main():
     """Main script."""
