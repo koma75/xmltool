@@ -76,7 +76,12 @@ def pout(msg=None, verbose=0, level=Level.INFO, newline=True):
     return
 
 def validate(kwargs):
-    """validate xml against xsd schema file"""
+    """Validate xml against xsd schema file
+
+    Arguments:
+        kwargs {Object} -- Keyword arguments parsed by Click library
+    """
+    # validate xml against xsd schema file
     rt = True
     pout(kwargs, kwargs["verbose"], Level.DEBUG)
     try:
@@ -98,7 +103,12 @@ def validate(kwargs):
     return
 
 def toJson(kwargs):
-    """export xml file to json"""
+    """Export xml file to JSON
+
+    Arguments:
+        kwargs {Object} -- Keyword arguments parsed by Click library
+    """
+    # export xml file to json
     pout(kwargs, kwargs["verbose"], Level.DEBUG)
     err = False
     try:
@@ -132,7 +142,11 @@ def toJson(kwargs):
     return
 
 def toYAML(kwargs):
-    """export xml file to YAML"""
+    """Export xml file to YAML
+
+    Arguments:
+        kwargs {Object} -- Keyword arguments parsed by Click library
+    """
     pout(kwargs, kwargs["verbose"], Level.DEBUG)
     err = False
     try:
