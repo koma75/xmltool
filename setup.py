@@ -33,17 +33,18 @@
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+from xmltool import version
 
 here = path.abspath(path.dirname(__file__))
 
-exec(compile(open('xmltool/version.py', "rb").read(),'xmltool/version.py', 'exec'))
+# exec(compile(open('xmltool/version.py', "rb").read(),'xmltool/version.py', 'exec'))
 
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='xmltool',
-    version=__version__,
+    version=version.__version__,
     description='xml cli tool',
     long_description=long_description,
     url='http://example.com/yourproject/page/',
@@ -71,7 +72,7 @@ setup(
         ),
 
     # add your package requirements
-    install_requires=['click>=7,<8', 'colorama>=0.4,<0.5', 'PyYAML>=5.1,<6'],
+    install_requires=['click>=7,<8', 'colorama>=0.4,<0.5', 'PyYAML>=5.1,<6', 'xmlschema>=1.0,<2'],
 
     entry_points={
         'console_scripts': [
